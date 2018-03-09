@@ -28,32 +28,32 @@ class VersionOneFieldParser: FieldParser{
   }
 
   override func parseFirstName() -> String? {
-    guard let firstDriverLicenseName = parseString("firstName") else { return parseDriverLicenseName("firstName") }
+    guard let firstDriverLicenseName = parseString(key: "firstName") else { return parseDriverLicenseName(key: "firstName") }
     return firstDriverLicenseName
   }
 
   override func parseLastName() -> String? {
-    guard let lastDriverLicenseName = parseString("lastName") else { return parseDriverLicenseName("lastName") }
+    guard let lastDriverLicenseName = parseString(key: "lastName") else { return parseDriverLicenseName(key: "lastName") }
     return lastDriverLicenseName
   }
 
   override func parseMiddleName() -> String? {
-    guard let middleDriverLicenseName = parseString("middleName") else { return parseDriverLicenseName("middleName") }
+    guard let middleDriverLicenseName = parseString(key: "middleName") else { return parseDriverLicenseName(key: "middleName") }
     return middleDriverLicenseName
   }
 
   // Parse something like 508 (5'8") into 68"
   override func parseHeight() -> Double? {
-    guard let heightInFeetAndInches = parseString("height") else { return nil }
-    guard let height = regex.firstMatch("([0-9]{1})", data: heightInFeetAndInches) else { return nil }
-    guard let inches = regex.firstMatch("[0-9]{1}([0-9]{2})", data: heightInFeetAndInches) else { return nil }
+    guard let heightInFeetAndInches = parseString(key: "height") else { return nil }
+    guard let height = regex.firstMatch(pattern: "([0-9]{1})", data: heightInFeetAndInches) else { return nil }
+    guard let inches = regex.firstMatch(pattern: "[0-9]{1}([0-9]{2})", data: heightInFeetAndInches) else { return nil }
 
     guard !height.isEmpty else { return nil }
     guard !inches.isEmpty else { return nil }
 
     let calculatedHeight = (Double(height)! * 12) + Double(inches)!
 
-    if heightInFeetAndInches.containsString("cm"){
+    if heightInFeetAndInches.contains("cm"){
       return Double(round(calculatedHeight * FieldParser.INCHES_PER_CENTIMETER))
     }else{
       return calculatedHeight
@@ -62,12 +62,12 @@ class VersionOneFieldParser: FieldParser{
 
   override func parseNameSuffix() -> NameSuffix {
     var suffix: String? = ""
-    if parseString("suffix") != nil{
-      suffix = parseString("suffix")
+    if parseString(key: "suffix") != nil{
+        suffix = parseString(key: "suffix")
     }
 
-    if parseDriverLicenseName("suffix") != nil{
-      suffix = parseDriverLicenseName("suffix")
+    if parseDriverLicenseName(key: "suffix") != nil{
+        suffix = parseDriverLicenseName(key: "suffix")
     }
 
     guard let nameSuffix = suffix else { return .Unknown }
@@ -101,9 +101,9 @@ class VersionOneFieldParser: FieldParser{
   }
 
   private func parseDriverLicenseName(key: String) -> String?{
-    guard let driverLicenseName = parseString("driverLicenseName") else { return nil }
+    guard let driverLicenseName = parseString(key: "driverLicenseName") else { return nil }
 
-    let namePieces = driverLicenseName.characters.split{ $0 == "," }.map(String.init)
+    let namePieces = driverLicenseName.split{ $0 == "," }.map(String.init)
 
     switch key {
     case "lastName":

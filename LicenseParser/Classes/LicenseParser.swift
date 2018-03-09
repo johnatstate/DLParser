@@ -29,7 +29,7 @@ public class Parser{
     - Returns: A ParsedLicense with all available parsed fields
   */
   public func parse() -> ParsedLicense{
-    self.fieldParser = versionBasedFieldParsing(parseVersion())
+    self.fieldParser = versionBasedFieldParsing(version: parseVersion())
 
     return License(
       firstName               : fieldParser.parseFirstName(),
@@ -41,24 +41,24 @@ public class Parser{
       gender                  : fieldParser.parseGender(),
       eyeColor                : fieldParser.parseEyeColor(),
       height                  : fieldParser.parseHeight(),
-      streetAddress           : fieldParser.parseString("streetAddress"),
-      city                    : fieldParser.parseString("city"),
-      state                   : fieldParser.parseString("state"),
-      postalCode              : fieldParser.parseString("postalCode"),
-      customerId              : fieldParser.parseString("customerId"),
-      documentId              : fieldParser.parseString("documentId"),
+      streetAddress           : fieldParser.parseString(key: "streetAddress"),
+      city                    : fieldParser.parseString(key: "city"),
+      state                   : fieldParser.parseString(key: "state"),
+      postalCode              : fieldParser.parseString(key: "postalCode"),
+      customerId              : fieldParser.parseString(key: "customerId"),
+      documentId              : fieldParser.parseString(key: "documentId"),
       country                 : fieldParser.parseCountry(),
-      middleNameTruncation    : fieldParser.parseTruncationStatus("middleNameTruncation"),
-      firstNameTruncation     : fieldParser.parseTruncationStatus("firstNameTruncation"),
-      lastNameTruncation      : fieldParser.parseTruncationStatus("lastNameTruncation"),
-      streetAddressSupplement : fieldParser.parseString("streetAddressSupplement"),
+      middleNameTruncation    : fieldParser.parseTruncationStatus(field: "middleNameTruncation"),
+      firstNameTruncation     : fieldParser.parseTruncationStatus(field: "firstNameTruncation"),
+      lastNameTruncation      : fieldParser.parseTruncationStatus(field: "lastNameTruncation"),
+      streetAddressSupplement : fieldParser.parseString(key: "streetAddressSupplement"),
       hairColor               : fieldParser.parseHairColor(),
-      placeOfBirth            : fieldParser.parseString("placeOfBirth"),
-      auditInformation        : fieldParser.parseString("auditInformation"),
-      inventoryControlNumber  : fieldParser.parseString("inventoryControlNumber"),
-      lastNameAlias           : fieldParser.parseString("lastNameAlias"),
-      firstNameAlias          : fieldParser.parseString("firstNameAlias"),
-      suffixAlias             : fieldParser.parseString("suffixAlias"),
+      placeOfBirth            : fieldParser.parseString(key: "placeOfBirth"),
+      auditInformation        : fieldParser.parseString(key: "auditInformation"),
+      inventoryControlNumber  : fieldParser.parseString(key: "inventoryControlNumber"),
+      lastNameAlias           : fieldParser.parseString(key: "lastNameAlias"),
+      firstNameAlias          : fieldParser.parseString(key: "firstNameAlias"),
+      suffixAlias             : fieldParser.parseString(key: "suffixAlias"),
       suffix                  : fieldParser.parseNameSuffix(),
       version                 : parseVersion(),
       pdf417                  : data
@@ -89,7 +89,7 @@ public class Parser{
   }
 
   private func parseVersion() -> String?{
-    return regex.firstMatch("\\d{6}(\\d{2})\\w+", data: data)
+    return regex.firstMatch(pattern: "\\d{6}(\\d{2})\\w+", data: data)
   }
 
 }

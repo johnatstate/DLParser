@@ -220,7 +220,7 @@ public struct License: ParsedLicense{
   */
   public func isExpired() -> Bool {
     guard let withDate = self.expirationDate else { return false }
-    guard NSDate().compare(withDate) == NSComparisonResult.OrderedDescending else { return false }
+    guard NSDate().compare(withDate as Date) == ComparisonResult.orderedDescending else { return false }
     return true
   }
 
@@ -231,7 +231,7 @@ public struct License: ParsedLicense{
   */
   public func hasBeenIssued() -> Bool {
     guard let withDate = self.issueDate else { return false }
-    guard NSDate().compare(withDate) == NSComparisonResult.OrderedDescending else { return false }
+    guard NSDate().compare(withDate as Date) == ComparisonResult.orderedDescending else { return false }
     return true
   }
 
