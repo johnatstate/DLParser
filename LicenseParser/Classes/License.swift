@@ -187,8 +187,8 @@ public struct License: ParsedLicense{
     self.expirationDate          = nil
     self.issueDate               = nil
     self.dateOfBirth             = nil
-    self.gender                  = Gender.Unknown
-    self.eyeColor                = EyeColor.Unknown
+    self.gender                  = Gender.unknown
+    self.eyeColor                = EyeColor.unknown
     self.height                  = nil
     self.streetAddress           = nil
     self.city                    = nil
@@ -196,19 +196,19 @@ public struct License: ParsedLicense{
     self.postalCode              = nil
     self.customerId              = nil
     self.documentId              = nil
-    self.country                 = IssuingCountry.UnitedStates
-    self.middleNameTruncation    = Truncation.None
-    self.firstNameTruncation     = Truncation.None
-    self.lastNameTruncation      = Truncation.None
+    self.country                 = IssuingCountry.unitedStates
+    self.middleNameTruncation    = Truncation.none
+    self.firstNameTruncation     = Truncation.none
+    self.lastNameTruncation      = Truncation.none
     self.streetAddressSupplement = nil
-    self.hairColor               = HairColor.Unknown
+    self.hairColor               = HairColor.unknown
     self.placeOfBirth            = nil
     self.auditInformation        = nil
     self.inventoryControlNumber  = nil
     self.lastNameAlias           = nil
     self.firstNameAlias          = nil
     self.suffixAlias             = nil
-    self.suffix                  = NameSuffix.Unknown
+    self.suffix                  = NameSuffix.unknown
     self.version                 = nil
     self.pdf417                  = nil
   }

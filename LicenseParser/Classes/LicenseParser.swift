@@ -8,7 +8,7 @@ public class Parser{
   public var data: String
 
   /// The FieldParsing object to aide in parsing individual fields
-  public var fieldParser: FieldParsing
+  public var fieldParser: FieldParser
 
   /**
     Initializes a new Parser
