@@ -11,7 +11,7 @@ import Foundation
 class VersionThreeFieldMapper: FieldMapper{
   override init(){
     super.init()
-    self.fields["firstName"] = "DCT"
+    self.fields[FieldKeys.firstName] = "DCT"
   }
 }
 

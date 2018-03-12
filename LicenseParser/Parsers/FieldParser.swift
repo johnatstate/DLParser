@@ -107,7 +107,7 @@ public class FieldParser {
     - Returns: An optional value parsed out of the raw data
   */
   public func parseFirstName() -> String?{
-    return parseString(key: "firstName")
+    return parseString(key: FieldKeys.firstName)
   }
 
   /**
@@ -116,7 +116,7 @@ public class FieldParser {
     - Returns: An optional value parsed out of the raw data
   */
   public func parseLastName() -> String?{
-    return parseString(key: "lastName")
+    return parseString(key: FieldKeys.lastName)
   }
 
   /**
@@ -125,7 +125,7 @@ public class FieldParser {
     - Returns: An optional value parsed out of the raw data
   */
   public func parseMiddleName() -> String?{
-    return parseString(key: "middleName")
+    return parseString(key: FieldKeys.middleName)
   }
 
   /**
@@ -134,7 +134,7 @@ public class FieldParser {
     - Returns: An optional value parsed out of the raw data
   */
   public func parseExpirationDate() -> NSDate?{
-    return parseDate(key: "expirationDate")
+    return parseDate(key: FieldKeys.expirationDate)
   }
 
   /**
@@ -143,7 +143,7 @@ public class FieldParser {
     - Returns: An optional value parsed out of the raw data
   */
   public func parseIssueDate() -> NSDate?{
-    return parseDate(key: "issueDate")
+    return parseDate(key: FieldKeys.issueDate)
   }
 
   /**
@@ -152,7 +152,7 @@ public class FieldParser {
     - Returns: An optional value parsed out of the raw data
   */
   public func parseDateOfBirth() -> NSDate?{
-    return parseDate(key: "dateOfBirth")
+    return parseDate(key: FieldKeys.dateOfBirth)
   }
 
   /**
@@ -161,7 +161,7 @@ public class FieldParser {
     - Returns: An optional value parsed out of the raw data
   */
   public func parseCountry() -> IssuingCountry {
-    guard let country = parseString(key: "country") else { return .unknown }
+    guard let country = parseString(key: FieldKeys.country) else { return .unknown }
     return IssuingCountry.of(country)
   }
 
@@ -181,7 +181,7 @@ public class FieldParser {
     - Returns: An optional value parsed out of the raw data
   */
   public func parseGender() -> Gender{
-    guard let gender = parseString(key: "gender") else { return .unknown }
+    guard let gender = parseString(key: FieldKeys.gender) else { return .unknown }
     return Gender.of(gender)
   }
 
@@ -191,7 +191,7 @@ public class FieldParser {
     - Returns: An optional value parsed out of the raw data
   */
   public func parseEyeColor() -> EyeColor{
-    guard let color = parseString(key: "eyeColor") else { return .unknown }
+    guard let color = parseString(key: FieldKeys.eyeColor) else { return .unknown }
     return EyeColor.of(color)
   }
 
@@ -201,7 +201,7 @@ public class FieldParser {
     - Returns: An optional value parsed out of the raw data
   */
   public func parseNameSuffix() -> NameSuffix{
-    guard let suffix = parseString(key: "suffix") else { return .unknown }
+    guard let suffix = parseString(key: FieldKeys.suffix) else { return .unknown }
     return NameSuffix.of(suffix)
   }
 
@@ -211,7 +211,7 @@ public class FieldParser {
     - Returns: An optional value parsed out of the raw data
   */
   public func parseHairColor() -> HairColor{
-    guard let color = parseString(key: "hairColor") else { return .unknown }
+    guard let color = parseString(key: FieldKeys.hairColor) else { return .unknown }
     return HairColor.of(color)
   }
 
@@ -221,8 +221,8 @@ public class FieldParser {
     - Returns: An optional value parsed out of the raw data in inches
   */
   public func parseHeight() -> Double?{
-    guard let heightString = parseString(key: "height") else { return nil }
-    guard let height = parseDouble(key: "height") else { return nil }
+    guard let heightString = parseString(key: FieldKeys.height) else { return nil }
+    guard let height = parseDouble(key: FieldKeys.height) else { return nil }
 
     if heightString.contains("cm"){
       return Double(round(height * FieldParser.inchesPerCentimeter))

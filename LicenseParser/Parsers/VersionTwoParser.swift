@@ -11,7 +11,7 @@ import Foundation
 class VersionTwoFieldMapper: FieldMapper{
   override init(){
     super.init()
-    self.fields["firstName"] = "DCT"
+    self.fields[FieldKeys.firstName] = "DCT"
   }
 }
 
