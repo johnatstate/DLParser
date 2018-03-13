@@ -8,118 +8,85 @@
 
 import Foundation
 
-class VersionOneFieldMapper: FieldMapper{
-  override init(){
-    super.init()
-
-    self.fields[FieldKeys.customerId] = "DBJ"
-    self.fields[FieldKeys.lastName]   = "DAB"
-    self.fields[FieldKeys.driverLicenseName] = "DAA"
-  }
+class VersionOneFieldMapper: FieldMapper {
+    
+    override init() {
+        super.init()
+        self.fields[FieldKeys.customerId] = "DBJ"
+        self.fields[FieldKeys.lastName]   = "DAB"
+        self.fields[FieldKeys.driverLicenseName] = "DAA"
+    }
 }
 
-class VersionOneFieldParser: FieldParser{
-  convenience init(data: String){
-    self.init(data: data, fieldMapper: VersionOneFieldMapper())
-  }
-
-  override func getDateFormat() -> String {
-    return "yyyyMMdd"
-  }
-
-  override func parseFirstName() -> String? {
-    guard let firstDriverLicenseName = parseString(key: FieldKeys.firstName) else { return parseDriverLicenseName(key: FieldKeys.firstName) }
-    return firstDriverLicenseName
-  }
-
-  override func parseLastName() -> String? {
-    guard let lastDriverLicenseName = parseString(key: FieldKeys.lastName) else { return parseDriverLicenseName(key: FieldKeys.lastName) }
-    return lastDriverLicenseName
-  }
-
-  override func parseMiddleName() -> String? {
-    guard let middleDriverLicenseName = parseString(key: FieldKeys.middleName) else { return parseDriverLicenseName(key: FieldKeys.middleName) }
-    return middleDriverLicenseName
-  }
-
-  // Parse something like 508 (5'8") into 68"
-  override func parseHeight() -> Double? {
-    guard let heightInFeetAndInches = parseString(key: FieldKeys.height) else { return nil }
-    guard let height = regex.firstMatch(pattern: "([0-9]{1})", data: heightInFeetAndInches) else { return nil }
-    guard let inches = regex.firstMatch(pattern: "[0-9]{1}([0-9]{2})", data: heightInFeetAndInches) else { return nil }
-
-    guard !height.isEmpty else { return nil }
-    guard !inches.isEmpty else { return nil }
-
-    let calculatedHeight = (Double(height)! * 12) + Double(inches)!
-
-    if heightInFeetAndInches.contains("cm"){
-      return Double(round(calculatedHeight * FieldParser.inchesPerCentimeter))
-    }else{
-      return calculatedHeight
-    }
-  }
-
-  override func parseNameSuffix() -> NameSuffix {
-    var suffix: String? = ""
-    if parseString(key: FieldKeys.suffix) != nil{
-        suffix = parseString(key: FieldKeys.suffix)
+class VersionOneFieldParser: FieldParser {
+    
+    convenience init(data: String) {
+        self.init(data: data, fieldMapper: VersionOneFieldMapper())
     }
 
-    if parseDriverLicenseName(key: FieldKeys.suffix) != nil{
-        suffix = parseDriverLicenseName(key: FieldKeys.suffix)
+    override func getDateFormat() -> String {
+        return "yyyyMMdd"
     }
 
-    guard let nameSuffix = suffix else { return .unknown }
-
-    switch nameSuffix{
-    case "JR":
-      return .junior
-    case "SR":
-      return .senior
-    case "1ST", "I":
-      return .first
-    case "2ND", "II":
-      return .second
-    case "3RD", "III":
-      return .third
-    case "4TH", "IV":
-      return .fourth
-    case "5TH", "V":
-      return .fifth
-    case "6TH", "VI":
-      return .sixth
-    case "7TH", "VII":
-      return .seventh
-    case "8TH", "VIII":
-      return .eighth
-    case "9TH", "IX":
-      return .ninth
-    default:
-      return .unknown
+    override func parseFirstName() -> String? {
+        return parseString(key: FieldKeys.firstName)
+            ?? parseDriverLicenseName(key: FieldKeys.firstName)
     }
-  }
 
-  private func parseDriverLicenseName(key: String) -> String?{
-    guard let driverLicenseName = parseString(key: FieldKeys.driverLicenseName) else { return nil }
-
-    let namePieces = driverLicenseName.split{ $0 == "," }.map(String.init)
-
-    switch key {
-    case FieldKeys.lastName:
-      guard namePieces.indices.contains(0) else { return nil }
-      return namePieces[0]
-    case FieldKeys.firstName:
-      guard namePieces.indices.contains(1) else { return nil }
-      return namePieces[1]
-    case FieldKeys.middleName:
-      guard namePieces.indices.contains(2) else { return nil }
-      return namePieces[2]
-    case FieldKeys.suffix:
-      guard namePieces.indices.contains(3) else { return nil }
-      return namePieces[3]
-    default:
-      return nil
+    override func parseLastName() -> String? {
+        return parseString(key: FieldKeys.lastName)
+            ?? parseDriverLicenseName(key: FieldKeys.lastName)
     }
-  }
+
+    override func parseMiddleName() -> String? {
+        return parseString(key: FieldKeys.middleName)
+            ?? parseDriverLicenseName(key: FieldKeys.middleName)
+    }
+
+    // Parse something like 508 (5'8") into 68"
+    override func parseHeight() -> Double? {
+        guard
+        let rawHeight = parseString(key: FieldKeys.height),
+        let heightString = regex.firstMatch(pattern: "([0-9]{1})", data: rawHeight),
+        let inchesString = regex.firstMatch(pattern: "[0-9]{1}([0-9]{2})", data: rawHeight),
+        let height = Double(heightString),
+        let inches = Double(inchesString) else {
+            return nil
+        }
+
+        let calculatedHeight = height * 12 + inches
+        return rawHeight.contains("cm")
+            ? round(calculatedHeight * FieldParser.inchesPerCentimeter)
+            : calculatedHeight
+    }
+
+    override func parseNameSuffix() -> NameSuffix {
+        guard let suffix = parseString(key: FieldKeys.suffix)
+            ?? parseDriverLicenseName(key: FieldKeys.suffix) else {
+            return .unknown
+        }
+        return NameSuffix.of(suffix)
+    }
+
+    private func parseDriverLicenseName(key: String) -> String? {
+        // Get the name components of the driver license
+        guard let driverLicenseName = parseString(key: FieldKeys.driverLicenseName) else {
+            return nil
+        }
+        let nameComponents = driverLicenseName.split{ $0 == "," }.map(String.init)
+
+        // Return the name component associated with the key
+        switch key {
+        case FieldKeys.lastName:
+            return nameComponents.first
+        case FieldKeys.firstName where nameComponents.count > 2:
+            return nameComponents[1]
+        case FieldKeys.middleName where nameComponents.count > 3:
+            return nameComponents[2]
+        case FieldKeys.suffix where nameComponents.count > 4:
+            return nameComponents[3]
+        default:
+            return nil
+        }
+    }
 }
