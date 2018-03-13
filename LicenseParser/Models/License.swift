@@ -24,10 +24,10 @@ public struct License {
     public var dateOfBirth: Date?
 
     /// The license holder's gender
-    public var gender: LicenseParser.Gender?
+    public var gender: Gender?
 
     /// The license holder's eye color
-    public var eyeColor: LicenseParser.EyeColor?
+    public var eyeColor: EyeColor?
 
     /// The license holder's height
     public var height: Double?
@@ -51,22 +51,22 @@ public struct License {
     public var documentId: String?
 
     /// The license's issuing country
-    public var country: LicenseParser.IssuingCountry?
+    public var country: IssuingCountry?
 
     /// A determination of if the middle name was truncated
-    public var middleNameTruncation: LicenseParser.Truncation?
+    public var middleNameTruncation: Truncation?
 
     /// A determination of if the first name was truncated
-    public var firstNameTruncation: LicenseParser.Truncation?
+    public var firstNameTruncation: Truncation?
 
     /// A determination of if the last name was truncated
-    public var lastNameTruncation: LicenseParser.Truncation?
+    public var lastNameTruncation: Truncation?
 
     /// The license holder's supplemental street address
     public var streetAddressSupplement: String?
 
     /// The license holder's hair color
-    public var hairColor: LicenseParser.HairColor?
+    public var hairColor: HairColor?
 
     /// The license holder's place of birth
     public var placeOfBirth: String?
@@ -87,7 +87,7 @@ public struct License {
     public var suffixAlias: String?
 
     /// The license holder's name suffix
-    public var suffix: LicenseParser.NameSuffix?
+    public var suffix: NameSuffix?
 
     /// The AAMVA version to which this parsed license conforms
     public var version: String?
