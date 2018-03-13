@@ -81,7 +81,7 @@ public class FieldParser {
 
     - Returns: An optional value parsed out of the raw data
   */
-    public func parseDate(key field: String) -> NSDate?{
+    public func parseDate(key field: String) -> Date?{
         guard let dateString = parseString(key: field) else { return nil }
     guard !dateString.isEmpty else { return nil }
 
@@ -89,7 +89,7 @@ public class FieldParser {
     formatter.dateFormat = getDateFormat()
         guard let parsedDate = formatter.date(from: dateString) else { return nil }
 
-        return parsedDate as NSDate
+        return parsedDate
   }
 
   /**
@@ -133,7 +133,7 @@ public class FieldParser {
 
     - Returns: An optional value parsed out of the raw data
   */
-  public func parseExpirationDate() -> NSDate?{
+  public func parseExpirationDate() -> Date?{
     return parseDate(key: FieldKeys.expirationDate)
   }
 
@@ -142,7 +142,7 @@ public class FieldParser {
 
     - Returns: An optional value parsed out of the raw data
   */
-  public func parseIssueDate() -> NSDate?{
+  public func parseIssueDate() -> Date?{
     return parseDate(key: FieldKeys.issueDate)
   }
 
@@ -151,7 +151,7 @@ public class FieldParser {
 
     - Returns: An optional value parsed out of the raw data
   */
-  public func parseDateOfBirth() -> NSDate?{
+  public func parseDateOfBirth() -> Date?{
     return parseDate(key: FieldKeys.dateOfBirth)
   }
 

@@ -13,13 +13,13 @@ public struct License {
   public var middleName: String?
 
   /// The expiration date of the license
-  public var expirationDate: NSDate?
+  public var expirationDate: Date?
 
   /// The issue date of the license
-  public var issueDate: NSDate?
+  public var issueDate: Date?
 
   /// The license holder's date of birth
-  public var dateOfBirth: NSDate?
+  public var dateOfBirth: Date?
 
   /// The license holder's gender
   public var gender: LicenseParser.Gender?
@@ -100,7 +100,7 @@ public struct License {
   */
   public func isExpired() -> Bool {
     guard let withDate = self.expirationDate else { return false }
-    guard NSDate().compare(withDate as Date) == ComparisonResult.orderedDescending else { return false }
+    guard Date().compare(withDate as Date) == ComparisonResult.orderedDescending else { return false }
     return true
   }
 
@@ -111,7 +111,7 @@ public struct License {
   */
   public func hasBeenIssued() -> Bool {
     guard let withDate = self.issueDate else { return false }
-    guard NSDate().compare(withDate as Date) == ComparisonResult.orderedDescending else { return false }
+    guard Date().compare(withDate as Date) == ComparisonResult.orderedDescending else { return false }
     return true
   }
 
