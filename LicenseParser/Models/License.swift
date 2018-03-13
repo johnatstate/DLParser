@@ -133,4 +133,17 @@ extension License {
     public var isAcceptable: Bool {
         return customerId != nil
     }
+    
+    public var isJuvenile: Bool {
+        var component = DateComponents()
+        component.year = -18
+        
+        guard
+        let birthDate = dateOfBirth,
+        let calculatedDate = Calendar.current
+            .date(byAdding: component, to: Date()) else {
+            return true
+        }
+        return calculatedDate >= birthDate
+    }
 }
