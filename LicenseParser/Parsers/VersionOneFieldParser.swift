@@ -49,7 +49,7 @@ class VersionOneFieldParser: FieldParser {
 
         let calculatedHeight = height * 12 + inches
         return rawHeight.contains("cm")
-            ? round(calculatedHeight * FieldParser.inchesPerCentimeter)
+            ? UnitConverter.inches(from: calculatedHeight)
             : calculatedHeight
     }
 

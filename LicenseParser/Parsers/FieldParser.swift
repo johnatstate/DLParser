@@ -5,9 +5,6 @@ import Foundation
 */
 public class FieldParser {
 
-  /// Used to convert cm to inches for height calculations
-  static let inchesPerCentimeter: Double = 0.393701
-
   /// A Regex object for doing the heavy lifting
   let regex: Regex = Regex()
 
@@ -255,7 +252,7 @@ public class FieldParser {
     guard let height = parseDouble(key: FieldKeys.height) else { return nil }
 
     if heightString.contains("cm"){
-      return Double(round(height * FieldParser.inchesPerCentimeter))
+      return UnitConverter.inches(from: height)
     }else{
       return height
     }

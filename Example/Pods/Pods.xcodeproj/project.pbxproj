@@ -23,6 +23,7 @@
 		85E02FA42056E3B900F34546 /* NameSuffix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E02FA32056E3B900F34546 /* NameSuffix.swift */; };
 		85E02FA62056E3FC00F34546 /* Truncation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E02FA52056E3FC00F34546 /* Truncation.swift */; };
 		85E02FAB2057064A00F34546 /* FieldKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E02FAA2057064A00F34546 /* FieldKeys.swift */; };
+		85E02FB620581BF600F34546 /* UnitConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E02FB520581BF600F34546 /* UnitConverter.swift */; };
 		9192CAA168209ED09405AE25B36D2E39 /* VersionFiveParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF21D51DF7E8279AEA33947F63716E7 /* VersionFiveParser.swift */; };
 		AA540C2BBDF74805634F9EA9E7D19FC7 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B89BF7315BAB3516AF2A51041DC39C3B /* XCTest.framework */; };
 		BDECD3E1DBC42DAAB17038CD511F7209 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAC405455F8E20BD0434D9D3E3D2879A /* Foundation.framework */; };
@@ -75,6 +76,7 @@
 		85E02FA32056E3B900F34546 /* NameSuffix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameSuffix.swift; sourceTree = "<group>"; };
 		85E02FA52056E3FC00F34546 /* Truncation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Truncation.swift; sourceTree = "<group>"; };
 		85E02FAA2057064A00F34546 /* FieldKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldKeys.swift; sourceTree = "<group>"; };
+		85E02FB520581BF600F34546 /* UnitConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitConverter.swift; sourceTree = "<group>"; };
 		8B134BF965CC37C99164F27D03328120 /* VersionEightParser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VersionEightParser.swift; sourceTree = "<group>"; };
 		8D38669E73037F875DAA976C54AD4A87 /* Regex.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Regex.swift; sourceTree = "<group>"; };
 		90B184D2E5BE90D4579AF59CA3CC5F59 /* LicenseParser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LicenseParser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -243,6 +245,7 @@
 				85E02FA72056E43A00F34546 /* Parsers */,
 				85E02F9A2056E12800F34546 /* AAMVA Categories */,
 				16FBBF0CE4050734F0BFF3BAF1D9646B /* Classes */,
+				85E02FB520581BF600F34546 /* UnitConverter.swift */,
 			);
 			path = LicenseParser;
 			sourceTree = "<group>";
@@ -408,6 +411,7 @@
 				85E02FA42056E3B900F34546 /* NameSuffix.swift in Sources */,
 				85E02FAB2057064A00F34546 /* FieldKeys.swift in Sources */,
 				F4B0A53DBA1C4F94CD66C1BA7D359DED /* License.swift in Sources */,
+				85E02FB620581BF600F34546 /* UnitConverter.swift in Sources */,
 				85E02FA62056E3FC00F34546 /* Truncation.swift in Sources */,
 				CC0FFF7A08604B9D64955D93538F6DD3 /* LicenseParser-dummy.m in Sources */,
 				001A52413FA6E13E0F0B424A958A4D7D /* LicenseParser.swift in Sources */,
