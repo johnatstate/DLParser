@@ -14,7 +14,6 @@
 		291D69D5198AAF770FF2224A32F6DFBE /* VersionTwoParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76F8E0ADE2222B2085F746CE093B078 /* VersionTwoParser.swift */; };
 		2F68F4BAB740B5BB959838A51EED24AA /* VersionOneFieldParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E681D0D32A07198CCF40473C14BA5F59 /* VersionOneFieldParser.swift */; };
 		3A2092D50D3B766C999A2A27C2AF9C23 /* VersionFourParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB40E7B99801CF808F6999D1CF4F9C76 /* VersionFourParser.swift */; };
-		5CFD505546D9725F6D7E86EDAE944C2A /* FieldMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFCFCD66E2ABE4C189CDC70EC74DC955 /* FieldMapper.swift */; };
 		7070E1BDFFD9D6D40C6ED465BD5C58CB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAC405455F8E20BD0434D9D3E3D2879A /* Foundation.framework */; };
 		85E02F9C2056E14E00F34546 /* IssuingCountry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E02F9B2056E14E00F34546 /* IssuingCountry.swift */; };
 		85E02F9E2056E30700F34546 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E02F9D2056E30700F34546 /* Gender.swift */; };
@@ -88,7 +87,6 @@
 		BB40E7B99801CF808F6999D1CF4F9C76 /* VersionFourParser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VersionFourParser.swift; sourceTree = "<group>"; };
 		C026A2C74160133C0EB576974BCF4122 /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1066F3AA9A2E1DE0CFB4EC5A48DD6E8 /* License.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = License.swift; sourceTree = "<group>"; };
-		CFCFCD66E2ABE4C189CDC70EC74DC955 /* FieldMapper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FieldMapper.swift; sourceTree = "<group>"; };
 		DD541045AF60D5EE5E50B6073A9283D5 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E681D0D32A07198CCF40473C14BA5F59 /* VersionOneFieldParser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VersionOneFieldParser.swift; sourceTree = "<group>"; };
 		E76F8E0ADE2222B2085F746CE093B078 /* VersionTwoParser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VersionTwoParser.swift; sourceTree = "<group>"; };
@@ -142,7 +140,6 @@
 		16FBBF0CE4050734F0BFF3BAF1D9646B /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				CFCFCD66E2ABE4C189CDC70EC74DC955 /* FieldMapper.swift */,
 				C1066F3AA9A2E1DE0CFB4EC5A48DD6E8 /* License.swift */,
 				4F794E754966191DF8D8706757A3B55D /* LicenseParser.swift */,
 				8D38669E73037F875DAA976C54AD4A87 /* Regex.swift */,
@@ -406,7 +403,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5CFD505546D9725F6D7E86EDAE944C2A /* FieldMapper.swift in Sources */,
 				03B2686FFF20BB350E29E85355AA76E6 /* FieldParser.swift in Sources */,
 				85E02FA42056E3B900F34546 /* NameSuffix.swift in Sources */,
 				85E02FAB2057064A00F34546 /* FieldKeys.swift in Sources */,
