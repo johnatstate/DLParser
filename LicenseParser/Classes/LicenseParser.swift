@@ -28,7 +28,7 @@ public class Parser{
 
     - Returns: A ParsedLicense with all available parsed fields
   */
-  public func parse() -> ParsedLicense{
+  public func parse() -> License {
     self.fieldParser = versionBasedFieldParsing(version: parseVersion())
 
     return License(
