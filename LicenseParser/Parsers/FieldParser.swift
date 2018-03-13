@@ -5,8 +5,8 @@ import Foundation
 */
 public class FieldParser {
 
-  /// A Regex object for doing the heavy lifting
-  let regex: Regex = Regex()
+    /// A Regex object for doing the heavy lifting
+    let regex: Regex = Regex()
 
     /// A Field Mapping object for finding fields in the raw data
     public var fields: [String: String] = [
@@ -40,20 +40,20 @@ public class FieldParser {
         FieldKeys.suffix                  : "DCU"
     ]
 
-  /// The raw data from an AAMVA spec adhering PDF-417 barcode
-  public var data: String
+    /// The raw data from an AAMVA spec adhering PDF-417 barcode
+    public let data: String
 
-  /**
-    Initializes a new Field Parser
+    /**
+        Initializes a new Field Parser
 
-    - Parameters:
-      - data: The AAMVA spec adhering PDF-417 barcode data
+        - Parameters:
+            - data: The AAMVA spec adhering PDF-417 barcode data
 
-    - Returns: An initialized Field Parser
-  */
-  public init(data: String){
-    self.data = data
-  }
+        - Returns: An initialized Field Parser
+     */
+    public init(data: String) {
+        self.data = data
+    }
 
     /**
         Parse a string out of the raw data
@@ -88,87 +88,87 @@ public class FieldParser {
         return Double(result)
     }
 
-  /**
-    Parse a date out of the raw data
+    /**
+        Parse a date out of the raw data
 
-    - Parameters:
-      - The human readable key we're looking for
+        - Parameters:
+            - The human readable key we're looking for
 
-    - Returns: An optional value parsed out of the raw data
-  */
-    public func parseDate(key field: String) -> Date?{
-        guard let dateString = parseString(key: field) else { return nil }
-    guard !dateString.isEmpty else { return nil }
+        - Returns: An optional value parsed out of the raw data
+    */
+    public func parseDate(key field: String) -> Date? {
+        guard let dateString = parseString(key: field),
+            !dateString.isEmpty else {
+            return nil
+        }
 
         let formatter = DateFormatter()
-    formatter.dateFormat = getDateFormat()
-        guard let parsedDate = formatter.date(from: dateString) else { return nil }
+        formatter.dateFormat = getDateFormat()
+        return formatter.date(from: dateString)
+    }
 
-        return parsedDate
-  }
+    /**
+        The string format used with an NSDateFormatter to parse dates. Usually 'yyyyMMdd' or 'MMddyyyy'.
 
-  /**
-    The string format used with an NSDateFormatter to parse dates. Usually 'yyyyMMdd' or 'MMddyyyy'.
+        - Returns: An NSDateFormatter formatter string acceptable date format
+    */
+    public func getDateFormat() -> String {
+        return "MMddyyyy"
+    }
 
-    - Returns: An NSDateFormatter formatter string acceptable date format
-  */
-  public func getDateFormat() -> String {
-    return "MMddyyyy"
-  }
+    /**
+        Parse the AAMVA last name out of the raw data
 
-  /**
-    Parse the AAMVA last name out of the raw data
+        - Returns: An optional value parsed out of the raw data
+    */
+    public func parseFirstName() -> String? {
+        return parseString(key: FieldKeys.firstName)
+    }
 
-    - Returns: An optional value parsed out of the raw data
-  */
-  public func parseFirstName() -> String?{
-    return parseString(key: FieldKeys.firstName)
-  }
+    /**
+        Parse the AAMVA last name out of the raw data
 
-  /**
-    Parse the AAMVA last name out of the raw data
+        - Returns: An optional value parsed out of the raw data
+    */
+    public func parseLastName() -> String? {
+        return parseString(key: FieldKeys.lastName)
+    }
 
-    - Returns: An optional value parsed out of the raw data
-  */
-  public func parseLastName() -> String?{
-    return parseString(key: FieldKeys.lastName)
-  }
+    /**
+        Parse the AAMVA middle name out of the raw data
 
-  /**
-    Parse the AAMVA middle name out of the raw data
+        - Returns: An optional value parsed out of the raw data
+    */
+    public func parseMiddleName() -> String? {
+        return parseString(key: FieldKeys.middleName)
+    }
 
-    - Returns: An optional value parsed out of the raw data
-  */
-  public func parseMiddleName() -> String?{
-    return parseString(key: FieldKeys.middleName)
-  }
+    /**
+        Parse the AAMVA expiration date out of the raw data
 
-  /**
-    Parse the AAMVA expiration date out of the raw data
+        - Returns: An optional value parsed out of the raw data
+    */
+    public func parseExpirationDate() -> Date? {
+        return parseDate(key: FieldKeys.expirationDate)
+    }
 
-    - Returns: An optional value parsed out of the raw data
-  */
-  public func parseExpirationDate() -> Date?{
-    return parseDate(key: FieldKeys.expirationDate)
-  }
+    /**
+        Parse the AAMVA issue date out of the raw data
 
-  /**
-    Parse the AAMVA issue date out of the raw data
+        - Returns: An optional value parsed out of the raw data
+    */
+    public func parseIssueDate() -> Date? {
+        return parseDate(key: FieldKeys.issueDate)
+    }
 
-    - Returns: An optional value parsed out of the raw data
-  */
-  public func parseIssueDate() -> Date?{
-    return parseDate(key: FieldKeys.issueDate)
-  }
+    /**
+        Parse the AAMVA date of birth out of the raw data
 
-  /**
-    Parse the AAMVA date of birth out of the raw data
-
-    - Returns: An optional value parsed out of the raw data
-  */
-  public func parseDateOfBirth() -> Date?{
-    return parseDate(key: FieldKeys.dateOfBirth)
-  }
+        - Returns: An optional value parsed out of the raw data
+    */
+    public func parseDateOfBirth() -> Date? {
+        return parseDate(key: FieldKeys.dateOfBirth)
+    }
 
     /**
         Parse the AAMVA issuing country out of the raw data
@@ -242,20 +242,18 @@ public class FieldParser {
         return HairColor.of(color)
     }
 
-  /**
-    Parse the AAMVA height out of the raw data
+    /**
+        Parse the AAMVA height out of the raw data
 
-    - Returns: An optional value parsed out of the raw data in inches
-  */
-  public func parseHeight() -> Double?{
-    guard let heightString = parseString(key: FieldKeys.height) else { return nil }
-    guard let height = parseDouble(key: FieldKeys.height) else { return nil }
-
-    if heightString.contains("cm"){
-      return UnitConverter.inches(from: height)
-    }else{
-      return height
+        - Returns: An optional value parsed out of the raw data in inches
+    */
+    public func parseHeight() -> Double? {
+        guard
+        let heightString = parseString(key: FieldKeys.height),
+        let height = parseDouble(key: FieldKeys.height) else {
+            return nil
+        }
+        return heightString.contains("cm")
+            ? UnitConverter.inches(from: height) : height
     }
-  }
-
 }

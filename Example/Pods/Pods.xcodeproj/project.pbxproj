@@ -137,16 +137,6 @@
 			name = "Development Pods";
 			sourceTree = "<group>";
 		};
-		16FBBF0CE4050734F0BFF3BAF1D9646B /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				C1066F3AA9A2E1DE0CFB4EC5A48DD6E8 /* License.swift */,
-				4F794E754966191DF8D8706757A3B55D /* LicenseParser.swift */,
-				8D38669E73037F875DAA976C54AD4A87 /* Regex.swift */,
-			);
-			path = Classes;
-			sourceTree = "<group>";
-		};
 		1792CA9FA60D275A213ECDF715A0DE2F /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -206,6 +196,7 @@
 		85E02FA72056E43A00F34546 /* Parsers */ = {
 			isa = PBXGroup;
 			children = (
+				4F794E754966191DF8D8706757A3B55D /* LicenseParser.swift */,
 				A0F1077FAC1E2921FEFC99F05D9C174E /* FieldParser.swift */,
 				E681D0D32A07198CCF40473C14BA5F59 /* VersionOneFieldParser.swift */,
 				E76F8E0ADE2222B2085F746CE093B078 /* VersionTwoParser.swift */,
@@ -217,12 +208,22 @@
 			path = Parsers;
 			sourceTree = "<group>";
 		};
-		85E02FAE2057168000F34546 /* Keys */ = {
+		85E02FAE2057168000F34546 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				C1066F3AA9A2E1DE0CFB4EC5A48DD6E8 /* License.swift */,
 				85E02FAA2057064A00F34546 /* FieldKeys.swift */,
 			);
-			path = Keys;
+			path = Models;
+			sourceTree = "<group>";
+		};
+		85E02FB72058313A00F34546 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				8D38669E73037F875DAA976C54AD4A87 /* Regex.swift */,
+				85E02FB520581BF600F34546 /* UnitConverter.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		9716B1AC14CFC38671957E1724D1616D /* LicenseParser */ = {
@@ -238,11 +239,10 @@
 		AA6A3ADBCC963CBDDA556D880E419B75 /* LicenseParser */ = {
 			isa = PBXGroup;
 			children = (
-				85E02FAE2057168000F34546 /* Keys */,
+				85E02FB72058313A00F34546 /* Utils */,
+				85E02FAE2057168000F34546 /* Models */,
 				85E02FA72056E43A00F34546 /* Parsers */,
 				85E02F9A2056E12800F34546 /* AAMVA Categories */,
-				16FBBF0CE4050734F0BFF3BAF1D9646B /* Classes */,
-				85E02FB520581BF600F34546 /* UnitConverter.swift */,
 			);
 			path = LicenseParser;
 			sourceTree = "<group>";
