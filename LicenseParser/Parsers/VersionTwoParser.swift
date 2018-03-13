@@ -8,15 +8,10 @@
 
 import Foundation
 
-class VersionTwoFieldMapper: FieldMapper{
-  override init(){
-    super.init()
-    self.fields[FieldKeys.firstName] = "DCT"
-  }
-}
-
-class VersionTwoFieldParser: FieldParser{
-  convenience init(data: String){
-    self.init(data: data, fieldMapper: VersionTwoFieldMapper())
-  }
+class VersionTwoFieldParser: FieldParser {
+    
+    override init(data: String) {
+        super.init(data: data)
+        fields[FieldKeys.firstName] = "DCT"
+    }
 }

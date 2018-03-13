@@ -8,19 +8,14 @@
 
 import Foundation
 
-class VersionThreeFieldMapper: FieldMapper{
-  override init(){
-    super.init()
-    self.fields[FieldKeys.firstName] = "DCT"
-  }
-}
-
-class VersionThreeFieldParser: FieldParser{
-  convenience init(data: String){
-    self.init(data: data, fieldMapper: VersionThreeFieldMapper())
-  }
-
-  override func getDateFormat() -> String {
-    return "yyyyMMdd"
-  }
+class VersionThreeFieldParser: FieldParser {
+    
+    override init(data: String) {
+        super.init(data: data)
+        fields[FieldKeys.firstName] = "DCT"
+    }
+    
+    override func getDateFormat() -> String {
+        return "yyyyMMdd"
+    }
 }

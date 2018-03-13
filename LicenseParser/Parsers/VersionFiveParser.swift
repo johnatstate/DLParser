@@ -8,11 +8,4 @@
 
 import Foundation
 
-class VersionFiveFieldMapper: FieldMapper{
-}
-
-class VersionFiveFieldParser: FieldParser{
-  convenience init(data: String){
-    self.init(data: data, fieldMapper: VersionFiveFieldMapper())
-  }
-}
+class VersionFiveFieldParser: FieldParser {}

@@ -8,20 +8,13 @@
 
 import Foundation
 
-class VersionOneFieldMapper: FieldMapper {
+class VersionOneFieldParser: FieldParser {
     
-    override init() {
-        super.init()
+    override init(data: String) {
+        super.init(data: data)
         self.fields[FieldKeys.customerId] = "DBJ"
         self.fields[FieldKeys.lastName]   = "DAB"
         self.fields[FieldKeys.driverLicenseName] = "DAA"
-    }
-}
-
-class VersionOneFieldParser: FieldParser {
-    
-    convenience init(data: String) {
-        self.init(data: data, fieldMapper: VersionOneFieldMapper())
     }
 
     override func getDateFormat() -> String {

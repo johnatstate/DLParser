@@ -11,8 +11,37 @@ public class FieldParser {
   /// A Regex object for doing the heavy lifting
   let regex: Regex = Regex()
 
-  /// A Field Mapping object for finding fields in the raw data
-  public var fieldMapper: FieldMapping
+    /// A Field Mapping object for finding fields in the raw data
+    public var fields: [String: String] = [
+        FieldKeys.firstName               : "DAC",
+        FieldKeys.lastName                : "DCS",
+        FieldKeys.middleName              : "DAD",
+        FieldKeys.expirationDate          : "DBA",
+        FieldKeys.issueDate               : "DBD",
+        FieldKeys.dateOfBirth             : "DBB",
+        FieldKeys.gender                  : "DBC",
+        FieldKeys.eyeColor                : "DAY",
+        FieldKeys.height                  : "DAU",
+        FieldKeys.streetAddress           : "DAG",
+        FieldKeys.city                    : "DAI",
+        FieldKeys.state                   : "DAJ",
+        FieldKeys.postalCode              : "DAK",
+        FieldKeys.customerId              : "DAQ",
+        FieldKeys.documentId              : "DCF",
+        FieldKeys.country                 : "DCG",
+        FieldKeys.middleNameTruncation    : "DDG",
+        FieldKeys.firstNameTruncation     : "DDF",
+        FieldKeys.lastNameTruncation      : "DDE",
+        FieldKeys.streetAddressSupplement : "DAH",
+        FieldKeys.hairColor               : "DAZ",
+        FieldKeys.placeOfBirth            : "DCI",
+        FieldKeys.auditInformation        : "DCJ",
+        FieldKeys.inventoryControlNumber  : "DCK",
+        FieldKeys.lastNameAlias           : "DBN",
+        FieldKeys.firstNameAlias          : "DBG",
+        FieldKeys.suffixAlias             : "DBS",
+        FieldKeys.suffix                  : "DCU"
+    ]
 
   /// The raw data from an AAMVA spec adhering PDF-417 barcode
   public var data: String
@@ -22,56 +51,45 @@ public class FieldParser {
 
     - Parameters:
       - data: The AAMVA spec adhering PDF-417 barcode data
-      - fieldMapper: A FieldMapping object
 
     - Returns: An initialized Field Parser
   */
-  public init(data: String, fieldMapper: FieldMapping){
+  public init(data: String){
     self.data = data
-    self.fieldMapper = fieldMapper
   }
 
-  /**
-    Initializes a new Field Parser defaulting to the basic FieldMapper
+    /**
+        Parse a string out of the raw data
 
-    - Parameters:
-      - data: The AAMVA spec adhering PDF-417 barcode data
+        - Parameters:
+            - The human readable key we're looking for
 
-    - Returns: An initialized Field Parser
-  */
-  public convenience init(data: String){
-    self.init(data: data, fieldMapper: FieldMapper())
-  }
+        - Returns: An optional value parsed out of the raw data
+     */
+    public func parseString(key: String) -> String? {
+        guard let identifier = fields[key] else {
+            return nil
+        }
+        return regex.firstMatch(pattern: "\(identifier)(.+)\\b", data: data)
+    }
 
-  /**
-    Parse a string out of the raw data
+    /**
+        Parse a double out of the raw data.
 
-    - Parameters:
-      - The human readable key we're looking for
+        - Parameters:
+            - The human readable key we're looking for
 
-    - Returns: An optional value parsed out of the raw data
-  */
-
-  public func parseString(key: String) -> String?{
-    let identifier = fieldMapper.fieldFor(key: key)
-    return regex.firstMatch(pattern: "\(identifier)(.+)\\b", data: data)
-  }
-
-  /**
-    Parse a double out of the raw data.
-
-    - Parameters:
-      - The human readable key we're looking for
-
-    - Returns: An optional value parsed out of the raw data
-  */
-  public func parseDouble(key: String) -> Double?{
-    let identifier = fieldMapper.fieldFor(key: key)
-    let result = regex.firstMatch(pattern: "\(identifier)(\\w+)\\b", data: data)
-    guard let unwrappedResult = result else { return nil }
-
-    return Double(unwrappedResult)
-  }
+        - Returns: An optional value parsed out of the raw data
+    */
+    public func parseDouble(key: String) -> Double? {
+        guard
+        let identifier = fields[key],
+        let result = regex.firstMatch(pattern:
+            "\(identifier)(\\w+)\\b", data: data) else {
+            return nil
+        }
+        return Double(result)
+    }
 
   /**
     Parse a date out of the raw data

@@ -208,12 +208,12 @@
 			isa = PBXGroup;
 			children = (
 				A0F1077FAC1E2921FEFC99F05D9C174E /* FieldParser.swift */,
-				8B134BF965CC37C99164F27D03328120 /* VersionEightParser.swift */,
-				2EF21D51DF7E8279AEA33947F63716E7 /* VersionFiveParser.swift */,
-				BB40E7B99801CF808F6999D1CF4F9C76 /* VersionFourParser.swift */,
 				E681D0D32A07198CCF40473C14BA5F59 /* VersionOneFieldParser.swift */,
-				329A3480F317C5B78B27ED5F2D69FD78 /* VersionThreeParser.swift */,
 				E76F8E0ADE2222B2085F746CE093B078 /* VersionTwoParser.swift */,
+				329A3480F317C5B78B27ED5F2D69FD78 /* VersionThreeParser.swift */,
+				BB40E7B99801CF808F6999D1CF4F9C76 /* VersionFourParser.swift */,
+				2EF21D51DF7E8279AEA33947F63716E7 /* VersionFiveParser.swift */,
+				8B134BF965CC37C99164F27D03328120 /* VersionEightParser.swift */,
 			);
 			path = Parsers;
 			sourceTree = "<group>";
