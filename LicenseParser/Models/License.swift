@@ -131,6 +131,6 @@ extension License {
         Returns: True when a set of essential properties are non-empty, false otherwise.
      */
     public var isAcceptable: Bool {
-        return documentId != nil
+        return customerId != nil
     }
 }
