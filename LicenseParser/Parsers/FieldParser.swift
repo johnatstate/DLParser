@@ -155,65 +155,77 @@ public class FieldParser {
     return parseDate(key: FieldKeys.dateOfBirth)
   }
 
-  /**
-    Parse the AAMVA issuing country out of the raw data
+    /**
+        Parse the AAMVA issuing country out of the raw data
+     
+        Returns: An optional value parsed out of the raw data
+     */
+    public func parseCountry() -> IssuingCountry? {
+        guard let country = parseString(key: FieldKeys.country) else {
+            return nil
+        }
+        return IssuingCountry.of(country)
+    }
 
-    - Returns: An optional value parsed out of the raw data
-  */
-  public func parseCountry() -> IssuingCountry {
-    guard let country = parseString(key: FieldKeys.country) else { return .unknown }
-    return IssuingCountry.of(country)
-  }
+    /**
+        Parse the AAMVA name truncation statuses out of the raw data
 
-  /**
-    Parse the AAMVA name truncation statuses out of the raw data
+        - Returns: An optional value parsed out of the raw data
+    */
+    public func parseTruncationStatus(field: String) -> Truncation? {
+        guard let truncation = parseString(key: field) else {
+            return nil
+        }
+        return Truncation.of(truncation)
+    }
 
-    - Returns: An optional value parsed out of the raw data
-  */
-  public func parseTruncationStatus(field: String) -> Truncation {
-    guard let truncation = parseString(key: field) else { return .unknown }
-    return Truncation.of(truncation)
-  }
+    /**
+        Parse the AAMVA gender out of the raw data
 
-  /**
-    Parse the AAMVA gender out of the raw data
+        - Returns: An optional value parsed out of the raw data
+    */
+    public func parseGender() -> Gender? {
+        guard let gender = parseString(key: FieldKeys.gender) else {
+            return nil
+        }
+        return Gender.of(gender)
+    }
 
-    - Returns: An optional value parsed out of the raw data
-  */
-  public func parseGender() -> Gender{
-    guard let gender = parseString(key: FieldKeys.gender) else { return .unknown }
-    return Gender.of(gender)
-  }
+    /**
+        Parse the AAMVA eye color out of the raw data
 
-  /**
-    Parse the AAMVA eye color out of the raw data
+        - Returns: An optional value parsed out of the raw data
+    */
+    public func parseEyeColor() -> EyeColor? {
+        guard let color = parseString(key: FieldKeys.eyeColor) else {
+            return nil
+        }
+        return EyeColor.of(color)
+    }
 
-    - Returns: An optional value parsed out of the raw data
-  */
-  public func parseEyeColor() -> EyeColor{
-    guard let color = parseString(key: FieldKeys.eyeColor) else { return .unknown }
-    return EyeColor.of(color)
-  }
+    /**
+        Parse the AAMVA name suffix out of the raw data
 
-  /**
-    Parse the AAMVA name suffix out of the raw data
+        - Returns: An optional value parsed out of the raw data
+    */
+    public func parseNameSuffix() -> NameSuffix? {
+        guard let suffix = parseString(key: FieldKeys.suffix) else {
+            return nil
+        }
+        return NameSuffix.of(suffix)
+    }
 
-    - Returns: An optional value parsed out of the raw data
-  */
-  public func parseNameSuffix() -> NameSuffix{
-    guard let suffix = parseString(key: FieldKeys.suffix) else { return .unknown }
-    return NameSuffix.of(suffix)
-  }
+    /**
+        Parse the AAMVA hair color out of the raw data
 
-  /**
-    Parse the AAMVA hair color out of the raw data
-
-    - Returns: An optional value parsed out of the raw data
-  */
-  public func parseHairColor() -> HairColor{
-    guard let color = parseString(key: FieldKeys.hairColor) else { return .unknown }
-    return HairColor.of(color)
-  }
+        - Returns: An optional value parsed out of the raw data
+    */
+    public func parseHairColor() -> HairColor? {
+        guard let color = parseString(key: FieldKeys.hairColor) else {
+            return nil
+        }
+        return HairColor.of(color)
+    }
 
   /**
     Parse the AAMVA height out of the raw data

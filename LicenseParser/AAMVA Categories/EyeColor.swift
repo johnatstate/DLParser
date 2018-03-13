@@ -19,7 +19,6 @@ import Foundation
      - Maroon: Maroon eyes
      - Pink: Pink eyes
      - Dichromatic: Dichromatic eyes
-     - Unknown: Unknown eye color
  */
 public enum EyeColor: String {
     case black
@@ -31,7 +30,6 @@ public enum EyeColor: String {
     case maroon
     case pink
     case dichromatic
-    case unknown
 }
 
 
@@ -39,7 +37,7 @@ public enum EyeColor: String {
 
 extension EyeColor {
     
-    static func of(_ rawValue: String) -> EyeColor {
+    static func of(_ rawValue: String) -> EyeColor? {
         switch rawValue {
         case "BLK":
             return .black
@@ -60,7 +58,7 @@ extension EyeColor {
         case "DIC":
             return .dichromatic
         default:
-            return .unknown
+            return nil
         }
     }
 }

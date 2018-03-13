@@ -21,7 +21,6 @@ import Foundation
      - Seventh: Seventh, VII, 7th
      - Eighth: Eighth, VIII, 8th
      - Ninth: Ninth, IX, 9th
-     - Unknown: When the name suffix is unknown
  */
 public enum NameSuffix: String {
     case junior
@@ -35,7 +34,6 @@ public enum NameSuffix: String {
     case seventh
     case eighth
     case ninth
-    case unknown
 }
 
 
@@ -43,7 +41,7 @@ public enum NameSuffix: String {
 
 extension NameSuffix {
     
-    static func of(_ rawValue: String) -> NameSuffix {
+    static func of(_ rawValue: String) -> NameSuffix? {
         switch rawValue {
         case "JR":
             return .junior
@@ -68,7 +66,7 @@ extension NameSuffix {
         case "9TH", "IX":
             return .ninth
         default:
-            return .unknown
+            return nil
         }
     }
 }

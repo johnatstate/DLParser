@@ -12,14 +12,10 @@ import Foundation
  
      - Male: Male
      - Female: Female
-     - Other: Not yet part of the AAMVA spec
-     - Unknown: When the gender cannot be determined
  */
 public enum Gender: String {
     case male
     case female
-    case other
-    case unknown
 }
 
 
@@ -27,14 +23,14 @@ public enum Gender: String {
 
 extension Gender {
     
-    static func of(_ rawValue: String) -> Gender {
+    static func of(_ rawValue: String) -> Gender? {
         switch rawValue {
         case "1":
             return .male
         case "2":
             return .female
         default:
-            return .other
+            return nil
         }
     }
 }

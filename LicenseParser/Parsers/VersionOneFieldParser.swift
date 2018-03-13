@@ -60,10 +60,10 @@ class VersionOneFieldParser: FieldParser {
             : calculatedHeight
     }
 
-    override func parseNameSuffix() -> NameSuffix {
+    override func parseNameSuffix() -> NameSuffix? {
         guard let suffix = parseString(key: FieldKeys.suffix)
             ?? parseDriverLicenseName(key: FieldKeys.suffix) else {
-            return .unknown
+            return nil
         }
         return NameSuffix.of(suffix)
     }

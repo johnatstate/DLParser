@@ -12,12 +12,10 @@ import Foundation
  
      - Truncated: The name was truncated
      - None: The name was not truncated
-     - Unknown: When the truncation cannot be determined
  */
 public enum Truncation: String {
     case truncated
     case none
-    case unknown
 }
 
 
@@ -25,14 +23,14 @@ public enum Truncation: String {
 
 extension Truncation {
     
-    static func of(_ rawValue: String) -> Truncation {
+    static func of(_ rawValue: String) -> Truncation? {
         switch rawValue {
         case "T":
             return .truncated
         case "N":
             return .none
         default:
-            return .unknown
+            return nil
         }
     }
 }

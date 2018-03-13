@@ -12,12 +12,10 @@ import Foundation
  
      - UnitedStates: The USA
      - Canda: Canada, eh?
-     - Unknown: When the issuing country is not available
  */
 public enum IssuingCountry: String {
     case unitedStates
     case canada
-    case unknown
 }
 
 
@@ -25,14 +23,14 @@ public enum IssuingCountry: String {
 
 extension IssuingCountry {
     
-    static func of(_ rawValue: String) -> IssuingCountry {
+    static func of(_ rawValue: String) -> IssuingCountry? {
         switch rawValue {
         case "USA":
             return .unitedStates
         case "CAN":
             return .canada
         default:
-            return .unknown
+            return nil
         }
     }
 }

@@ -18,7 +18,6 @@ import Foundation
      - Red: Red hair
      - Sandy: Sandy hair
      - White: White hair
-     - Unknown: Unknown hair color
  */
 public enum HairColor: String {
     case bald
@@ -29,14 +28,13 @@ public enum HairColor: String {
     case red
     case sandy
     case white
-    case unknown
 }
 
 // MARK: - Parsing
 
 extension HairColor {
     
-    static func of(_ rawValue: String) -> HairColor {
+    static func of(_ rawValue: String) -> HairColor? {
         switch rawValue {
         case "BAL":
             return .bald
@@ -55,7 +53,7 @@ extension HairColor {
         case "WHI":
             return .white
         default:
-            return .unknown
+            return nil
         }
     }
 }
