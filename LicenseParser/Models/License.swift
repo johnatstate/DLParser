@@ -90,7 +90,7 @@ public struct License {
     public var suffix: NameSuffix?
 
     /// The AAMVA version to which this parsed license conforms
-    public var version: String?
+    public var version: Int?
 
     /// The raw pdf417 scan data used to build this parsed license
     public var pdf417: String?

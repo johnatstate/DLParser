@@ -7,34 +7,86 @@
 
 import Foundation
 
-struct FieldKeys {
-    static let firstName = "firstName"
-    static let lastName = "lastName"
-    static let middleName = "middleName"
-    static let driverLicenseName = "driverLicenseName"
-    static let expirationDate = "expirationDate"
-    static let issueDate = "issueDate"
-    static let dateOfBirth = "dateOfBirth"
-    static let gender = "gender"
-    static let eyeColor = "eyeColor"
-    static let height = "height"
-    static let streetAddress = "streetAddress"
-    static let city = "city"
-    static let state = "state"
-    static let postalCode = "postalCode"
-    static let customerId = "customerId"
-    static let documentId = "documentId"
-    static let country = "country"
-    static let middleNameTruncation = "middleNameTruncation"
-    static let firstNameTruncation = "firstNameTruncation"
-    static let lastNameTruncation = "lastNameTruncation"
-    static let streetAddressSupplement = "streetAddressSupplement"
-    static let hairColor = "hairColor"
-    static let placeOfBirth = "placeOfBirth"
-    static let auditInformation = "auditInformation"
-    static let inventoryControlNumber = "inventoryControlNumber"
-    static let lastNameAlias = "lastNameAlias"
-    static let firstNameAlias = "firstNameAlias"
-    static let suffixAlias = "suffixAlias"
-    static let suffix = "suffix"
+public enum FieldKey: String {
+    
+    // MARK: - Names
+    
+    case firstName
+    case lastName
+    case middleName
+    
+    case driverLicenseName
+    case givenName
+    
+    case lastNameAlias
+    case firstNameAlias
+    case givenNameAlias
+    case suffixAlias
+    case suffix
+    
+    case middleNameTruncation
+    case firstNameTruncation
+    case lastNameTruncation
+    
+    
+    // MARK: - Dates
+    
+    case expirationDate
+    case issueDate
+    case birthDate
+    case hazmatExpirationDate
+    case revisionDate
+    
+    
+    // MARK: - Appearance
+    
+    case race
+    case gender
+    case eyeColor
+    case heightInches
+    case heightCentimeters
+    case hairColor
+    case weightRange
+    case weightPounds
+    case weightKilograms
+
+    
+    // MARK: - Address
+    
+    case placeOfBirth
+    case streetAddress
+    case streetAddressTwo
+    case city
+    case state
+    case postalCode
+    case country
+
+    
+    // MARK: - Meta Data
+    
+    case driverLicenseNumber
+    case uniqueDocumentId
+    case auditInformation
+    case inventoryControlNumber
+    case complianceType
+    
+    case isOrganDonor
+    case isVeteran
+    case isTemporaryDocument
+    
+    case fVehicleCode  // f ==> Federal
+    
+    case sVehicleCode  // s ==> Standard
+    case sRestrictionCode
+    case sEndorsementCode
+    
+    case jVehicleClass  // j ==> Jurisdiction
+    case jRestrictionCode
+    case jEndorsementCode
+    
+    case jVehicleClassDescription
+    case jRestrictionCodeDescription
+    case jEndorsementCodeDescription
+    
+    case federalCommercialVehicleCode
 }

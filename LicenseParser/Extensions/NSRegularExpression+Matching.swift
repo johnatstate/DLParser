@@ -1,8 +1,8 @@
 import Foundation
 
-class Regex {
+extension NSRegularExpression {
     
-    func firstMatch(pattern: String, data: String) -> String? {
+    static func firstMatch(pattern: String, data: String) -> String? {
         // Create the regex
         guard let regex = try? NSRegularExpression(pattern: pattern,
                                                    options: .caseInsensitive) else {
