@@ -88,21 +88,47 @@ public class AAMVAParser {
     /**
         The number of subfiles found in the driver license data.
      */
-    public var subfileCount: Int {
+    public var subfileCount: Int? {
         let match = NSRegularExpression.firstMatch(pattern: "\\d{8}(\\d{2})\\w+",
                                                    data: data) as NSString?
-        return match?.integerValue ?? 0
+        return match?.integerValue
     }
     
+    /**
+        The date format used for cards issued in the United States.
+        This field should be modified in subclasses for version-specific
+        date format changes.
+    */
     public var unitedStatesDateFormat: String {
         return "MMddyyyy"
     }
     
+    /**
+        The date format used for cards issued in Canada. This field
+        should be modified in subclasses for version-specific date
+        format changes.
+    */
     public var canadaDateFormat: String {
         return "yyyyMMdd"
     }
     
-    private var fieldParser: AAMVAParser {
+    /**
+        The date format determined by the PDF417 data's country field
+    */
+    public var dateFormat: String {
+        guard let country = parsedCountry else {
+            return unitedStatesDateFormat
+        }
+        
+        switch country {
+        case .unitedStates:
+            return unitedStatesDateFormat
+        case .canada:
+            return canadaDateFormat
+        }
+    }
+    
+    private var versionParser: AAMVAParser {
         let defaultParser = AAMVAParser(data: data)
         guard let version = versionNumber else {
             return defaultParser
@@ -139,40 +165,59 @@ public class AAMVAParser {
      
         - Returns: A ParsedLicense with all available parsed fields
      */
-    public func parse() -> License {
+    public func parse() -> DriverLicense {
         let version = versionNumber
-        let fieldParser = self.fieldParser
-        return License(
-            firstName               : fieldParser.parseFirstName(),
-            lastName                : fieldParser.parseLastName(),
-            middleName              : fieldParser.parseMiddleName(),
-            expirationDate          : fieldParser.parseExpirationDate(),
-            issueDate               : fieldParser.parseIssueDate(),
-            dateOfBirth             : fieldParser.parseDateOfBirth(),
-            gender                  : fieldParser.parseGender(),
-            eyeColor                : fieldParser.parseEyeColor(),
-            height                  : fieldParser.parseHeight(),
-            streetAddress           : fieldParser.parseString(key: FieldKey.streetAddress),
-            city                    : fieldParser.parseString(key: FieldKey.city),
-            state                   : fieldParser.parseString(key: FieldKey.state),
-            postalCode              : fieldParser.parseString(key: FieldKey.postalCode),
-            customerId              : fieldParser.parseString(key: FieldKey.driverLicenseNumber),
-            documentId              : fieldParser.parseString(key: FieldKey.uniqueDocumentId),
-            country                 : fieldParser.parseCountry(),
-            middleNameTruncation    : fieldParser.parseTruncationStatus(field: FieldKey.middleNameTruncation),
-            firstNameTruncation     : fieldParser.parseTruncationStatus(field: FieldKey.firstNameTruncation),
-            lastNameTruncation      : fieldParser.parseTruncationStatus(field: FieldKey.lastNameTruncation),
-            streetAddressSupplement : fieldParser.parseString(key: FieldKey.streetAddressTwo),
-            hairColor               : fieldParser.parseHairColor(),
-            placeOfBirth            : fieldParser.parseString(key: FieldKey.placeOfBirth),
-            auditInformation        : fieldParser.parseString(key: FieldKey.auditInformation),
-            inventoryControlNumber  : fieldParser.parseString(key: FieldKey.inventoryControlNumber),
-            lastNameAlias           : fieldParser.parseString(key: FieldKey.lastNameAlias),
-            firstNameAlias          : fieldParser.parseString(key: FieldKey.firstNameAlias),
-            suffixAlias             : fieldParser.parseString(key: FieldKey.suffixAlias),
-            suffix                  : fieldParser.parseNameSuffix(),
-            version                 : version,
-            pdf417                  : data
+        let parser = self.versionParser
+        return DriverLicense(
+            firstName:                              parser.parsedFirstName,
+            middleNames:                            parser.parsedMiddleNames,
+            lastName:                               parser.parsedLastName,
+            firstNameAlias:                         parser.parseString(key: FieldKey.firstNameAlias),
+            givenNameAlias:                         parser.parseString(key: FieldKey.givenNameAlias),
+            lastNameAlias:                          parser.parseString(key: FieldKey.lastNameAlias),
+            suffixAlias:                            parser.parseString(key: FieldKey.suffixAlias),
+            suffix:                                 parser.parsedNameSuffix,
+            firstNameTruncation:                    parser.parseTruncation(key: FieldKey.firstNameTruncation),
+            middleNameTruncation:                   parser.parseTruncation(key: FieldKey.middleNameTruncation),
+            lastNameTruncation:                     parser.parseTruncation(key: FieldKey.lastNameTruncation),
+            expirationDate:                         parser.parseDate(key: FieldKey.expirationDate),
+            issuedDate:                             parser.parseDate(key: FieldKey.issueDate),
+            birthdate:                              parser.parseDate(key: FieldKey.birthDate),
+            hazmatExpirationDate:                   parser.parseDate(key: FieldKey.hazmatExpirationDate),
+            revisionDate:                           parser.parseDate(key: FieldKey.revisionDate),
+            race:                                   parser.parseString(key: FieldKey.race),
+            gender:                                 parser.parsedGender,
+            eyeColor:                               parser.parsedEyeColor,
+            height:                                 parser.parsedHeight,
+            weight:                                 parser.parsedWeight,
+            hairColor:                              parser.parsedHairColor,
+            placeOfBirth:                           parser.parseString(key: FieldKey.placeOfBirth),
+            streetAddress:                          parser.parseString(key: FieldKey.streetAddress),
+            streetAddressTwo:                       parser.parseString(key: FieldKey.streetAddressTwo),
+            city:                                   parser.parseString(key: FieldKey.city),
+            state:                                  parser.parseString(key: FieldKey.state),
+            postalCode:                             parser.parseString(key: FieldKey.postalCode),
+            country:                                parser.parsedCountry,
+            licenseNumber:                          parser.parseString(key: FieldKey.driverLicenseNumber),
+            doucmentId:                             parser.parseString(key: FieldKey.uniqueDocumentId),
+            auditInformation:                       parser.parseString(key: FieldKey.auditInformation),
+            inventoryControlNumber:                 parser.parseString(key: FieldKey.inventoryControlNumber),
+            complianceType:                         parser.parseString(key: FieldKey.complianceType),
+            isOrganDonor:                           parser.parseBoolean(key: FieldKey.isOrganDonor),
+            isVeteran:                              parser.parseBoolean(key: FieldKey.isVeteran),
+            isTemporaryDocument:                    parser.parseBoolean(key: FieldKey.isTemporaryDocument),
+            federalVehicleCode:                     parser.parseString(key: FieldKey.fVehicleCode),
+            standardVehicleCode:                    parser.parseString(key: FieldKey.sVehicleCode),
+            standardRestrictionCode:                parser.parseString(key: FieldKey.sRestrictionCode),
+            standardEndorsementCode:                parser.parseString(key: FieldKey.sEndorsementCode),
+            jurisdictionVehicleCode:                parser.parseString(key: FieldKey.jVehicleClass),
+            jurisdictionRestrictionCode:            parser.parseString(key: FieldKey.jRestrictionCode),
+            jurisdictionEndorsementCode:            parser.parseString(key: FieldKey.jEndorsementCode),
+            jurisdictionVehicleDescription:         parser.parseString(key: FieldKey.jVehicleClassDescription),
+            jurisdictionRestrictionDescription:     parser.parseString(key: FieldKey.jRestrictionCodeDescription),
+            jurisdictionEndorsementDescription:     parser.parseString(key: FieldKey.jEndorsementCodeDescription),
+            version:                                version,
+            pdf417Data:                             data
         )
     }
 
@@ -196,6 +241,13 @@ public class AAMVAParser {
         return Double(result)
     }
     
+    func parseBoolean(key: FieldKey) -> Bool? {
+        guard let value = parseString(key: key) else {
+            return nil
+        }
+        return value == "1"
+    }
+    
     func parseDate(key: FieldKey) -> Date? {
         guard let dateString = parseString(key: key),
             !dateString.isEmpty else {
@@ -203,88 +255,120 @@ public class AAMVAParser {
         }
 
         let formatter = DateFormatter()
-        formatter.dateFormat = unitedStatesDateFormat  // TODO: Account CA
+        formatter.dateFormat = dateFormat
         return formatter.date(from: dateString)
     }
     
+    func parseTruncation(key: FieldKey) -> Truncation? {
+        guard let truncation = parseString(key: key) else {
+            return nil
+        }
+        return Truncation.of(truncation)
+    }
     
-    // MARK: - Field Parsing
     
-    func parseFirstName() -> String? {
+    // MARK: - Name Parsing
+    
+    var parsedFirstName: String? {
         return parseString(key: FieldKey.firstName)
+            ?? parseString(key: FieldKey.givenName)?.trimmedSplitByComma.first
+            ?? parseString(key: FieldKey.driverLicenseName)?.trimmedSplitByComma.first
     }
     
-    func parseLastName() -> String? {
+    var parsedMiddleNames: [String] {
+        if let middleName = parseString(key: FieldKey.middleName) {
+            return [middleName]
+        }
+        
+        if let givenName = parseString(key: FieldKey.givenName) {
+            let parts = givenName.trimmedSplitByComma.dropFirst()
+            return Array(parts)
+        }
+        
+        if let driveLicenseName = parseString(key: FieldKey.driverLicenseName) {
+            let parts = driveLicenseName.trimmedSplitByComma.dropFirst().dropLast()
+            return Array(parts)
+        }
+        
+        return []
+    }
+    
+    var parsedLastName: String? {
         return parseString(key: FieldKey.lastName)
+            ?? parseString(key: FieldKey.driverLicenseName)?.trimmedSplitByComma.last
     }
 
-    func parseMiddleName() -> String? {
-        return parseString(key: FieldKey.middleName)
+    var parsedNameSuffix: NameSuffix? {
+        guard let suffix = parseString(key: FieldKey.suffix) else {
+            return nil
+        }
+        return NameSuffix.of(suffix)
     }
     
-    func parseExpirationDate() -> Date? {
-        return parseDate(key: FieldKey.expirationDate)
-    }
     
-    func parseIssueDate() -> Date? {
-        return parseDate(key: FieldKey.issueDate)
-    }
+    // MARK: - Address Parsing
 
-    func parseDateOfBirth() -> Date? {
-        return parseDate(key: FieldKey.birthDate)
-    }
-
-    func parseCountry() -> IssuingCountry? {
+    var parsedCountry: IssuingCountry? {
         guard let country = parseString(key: FieldKey.country) else {
             return nil
         }
         return IssuingCountry.of(country)
     }
     
-    func parseTruncationStatus(field: FieldKey) -> Truncation? {
-        guard let truncation = parseString(key: field) else {
-            return nil
-        }
-        return Truncation.of(truncation)
-    }
     
-    func parseGender() -> Gender? {
+    // MARK: - Appearance Parsing
+    
+    var parsedGender: Gender? {
         guard let gender = parseString(key: FieldKey.gender) else {
             return nil
         }
         return Gender.of(gender)
     }
     
-    func parseEyeColor() -> EyeColor? {
+    var parsedEyeColor: EyeColor? {
         guard let color = parseString(key: FieldKey.eyeColor) else {
             return nil
         }
         return EyeColor.of(color)
     }
-    
-    func parseNameSuffix() -> NameSuffix? {
-        guard let suffix = parseString(key: FieldKey.suffix) else {
-            return nil
-        }
-        return NameSuffix.of(suffix)
-    }
 
-    func parseHairColor() -> HairColor? {
+    var parsedHairColor: HairColor? {
         guard let color = parseString(key: FieldKey.hairColor) else {
             return nil
         }
         return HairColor.of(color)
     }
     
-    /// Returns height in inches
-    func parseHeight() -> Double? {
-        // TODO: Account height formats
+    /**
+        Returns the height in inches.
+     */
+    var parsedHeight: Double? {
         guard
-        let heightString = parseString(key: FieldKey.heightInches),
-        let height = parseDouble(key: FieldKey.heightInches) else {
+        let heightString = parseString(key: FieldKey.heightInches)?.split(separator: " ").first,
+        let height = Double(heightString) else {
             return nil
         }
+        
         return heightString.contains("cm")
             ? UnitConverter.inches(from: height) : height
+    }
+    
+    /**
+        Returns the weight range or exact weight.
+     */
+    var parsedWeight: Weight {
+        if let pounds = parseString(key: FieldKey.weightPounds)?.double {
+            return Weight(range: nil, pounds: pounds)
+        }
+        
+        if let kilograms = parseString(key: FieldKey.weightKilograms)?.double {
+            return Weight(range: nil, pounds: UnitConverter.pounds(from: kilograms))
+        }
+        
+        if let weightRangeRank = parseString(key: FieldKey.weightRange)?.double {
+            let weightRange =  WeightRange(rank: Int(weightRangeRank))
+            return Weight(range: weightRange, pounds: nil)
+        }
+        return Weight()
     }
 }

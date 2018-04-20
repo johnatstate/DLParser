@@ -30,21 +30,4 @@ class VersionThreeFieldParser: AAMVAParser {
         fields[FieldKey.isVeteran] = nil
         fields[FieldKey.driverLicenseName] = nil
     }
-    
-    override func parseFirstName() -> String? {
-        guard
-        let givenName = parseString(key: FieldKey.givenName),
-        let firstName = givenName.split(separator: ",").first else {
-            return nil
-        }
-        return String(firstName)
-    }
-    
-    override func parseMiddleName() -> String? {
-        guard let givenName = parseString(key: FieldKey.givenName) else {
-            return nil
-        }
-        let parts = givenName.split(separator: ",").dropFirst()
-        return parts.joined(separator: " ")
-    }
 }

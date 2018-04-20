@@ -51,39 +51,30 @@ class VersionOneParser: AAMVAParser {
         return "yyyyMMdd"
     }
 
-    override func parseFirstName() -> String? {                
-        return parseString(key: FieldKey.firstName)
-            ?? parseDriverLicenseName(key: FieldKey.firstName)
+    override var parsedHeight: Double? {
+        // Special case for version one where the mixed in|cm string
+        // is treated as feet/in
+        return parseString(key: FieldKey.heightCentimeters)?.double
+            ?? parsedInches
     }
-
-    override func parseLastName() -> String? {
-        return parseString(key: FieldKey.lastName)
-            ?? parseDriverLicenseName(key: FieldKey.lastName)
-    }
-
-    override func parseMiddleName() -> String? {
-        return parseString(key: FieldKey.middleName)
-            ?? parseDriverLicenseName(key: FieldKey.middleName)
-    }
-
-    // Parse something like 508 (5'8") into 68"
-    override func parseHeight() -> Double? {
-        guard  // TODO: Height parsing for cm field
-        let rawHeight = parseString(key: FieldKey.heightInches),
-        let heightString = NSRegularExpression.firstMatch(pattern: "([0-9]{1})", data: rawHeight),
-        let inchesString = NSRegularExpression.firstMatch(pattern: "[0-9]{1}([0-9]{2})", data: rawHeight),
-        let height = Double(heightString),
-        let inches = Double(inchesString) else {
+    
+    private var parsedInches: Double? {
+        guard let feetInches = parseString(key: FieldKey.heightInches),
+            feetInches.count == 3 else {
             return nil
         }
-
-        let calculatedHeight = height * 12 + inches
-        return rawHeight.contains("cm")
-            ? UnitConverter.inches(from: calculatedHeight)
-            : calculatedHeight
+        
+        let inchesStartIndex = feetInches.index(feetInches.startIndex, offsetBy: 1)
+        
+        guard
+        let feet = feetInches[feetInches.startIndex].string.double,
+        let inches = feetInches[inchesStartIndex...feetInches.endIndex].string.double else {
+            return nil
+        }
+        return inches + feet * 12
     }
 
-    override func parseNameSuffix() -> NameSuffix? {
+    override var parsedNameSuffix: NameSuffix? {
         guard let suffix = parseString(key: FieldKey.suffix)
             ?? parseDriverLicenseName(key: FieldKey.suffix) else {
             return nil
