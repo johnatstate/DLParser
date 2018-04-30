@@ -30,6 +30,7 @@ public enum EyeColor: String {
     case maroon
     case pink
     case dichromatic
+    case unknown
 }
 
 
@@ -37,7 +38,7 @@ public enum EyeColor: String {
 
 extension EyeColor {
     
-    static func of(_ rawValue: String) -> EyeColor? {
+    static func of(_ rawValue: String) -> EyeColor {
         switch rawValue {
         case "BLK":
             return .black
@@ -58,7 +59,7 @@ extension EyeColor {
         case "DIC":
             return .dichromatic
         default:
-            return nil
+            return .unknown
         }
     }
 }

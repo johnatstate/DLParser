@@ -13,13 +13,21 @@ public struct DriverLicense {
     
     var firstName: String?
     var middleNames = [String]()
+    var middleName: String {
+        get {
+            return middleNames.joined(separator: " ")
+        }
+        set {
+            middleNames = [newValue]
+        }
+    }
     var lastName: String?
     
     var firstNameAlias: String?
     var givenNameAlias: String?
     var lastNameAlias: String?
     var suffixAlias: String?
-    var suffix: NameSuffix?
+    var suffix: NameSuffix? = .unknown
     var firstNameTruncation: Truncation?
     var middleNameTruncation: Truncation?
     var lastNameTruncation: Truncation?
@@ -28,8 +36,8 @@ public struct DriverLicense {
     // MARK: - Dates
     
     var expirationDate: Date?
-    var issuedDate: Date?
-    var birthdate: Date?
+    var issueDate: Date?
+    var birthDate: Date?
     var hazmatExpirationDate: Date?
     var revisionDate: Date?
     
@@ -37,11 +45,11 @@ public struct DriverLicense {
     // MARK: - Appearance
     
     var race: String?
-    var gender: Gender?
-    var eyeColor: EyeColor?
+    var gender: Gender? = .other
+    var eyeColor: EyeColor? = .unknown
     var height: Double?
     var weight = Weight()
-    var hairColor: HairColor?
+    var hairColor: HairColor? = .unknown
     
     var placeOfBirth: String?
     var streetAddress: String?
@@ -52,7 +60,8 @@ public struct DriverLicense {
     var country: IssuingCountry?
     
     var licenseNumber: String?
-    var doucmentId: String?
+    var documentId: String?
+    var customerId: String?
     var auditInformation: String?
     var inventoryControlNumber: String?
     var complianceType: String?
@@ -75,7 +84,6 @@ public struct DriverLicense {
     
     var version: Int?
     var pdf417Data: String?
-    
 }
 
 
@@ -101,10 +109,10 @@ extension DriverLicense {
         Returns: True when the current date is past the issue date, false otherwise.
      */
     public var isIssued: Bool {
-        guard let issuedDate = issuedDate else {
+        guard let issueDate = issueDate else {
             return false
         }
-        return Date() > issuedDate
+        return Date() > issueDate
     }
     
     /**
@@ -121,7 +129,7 @@ extension DriverLicense {
         component.year = -18
         
         guard
-        let birthDate = birthdate,
+        let birthDate = birthDate,
         let calculatedDate = Calendar.current
             .date(byAdding: component, to: Date()) else {
             return true

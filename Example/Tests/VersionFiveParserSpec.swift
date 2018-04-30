@@ -9,27 +9,27 @@
 import Foundation
 import Quick
 import Nimble
-import LicenseParser
+@testable import LicenseParser
 
 class VersionFiveParserSpec: QuickSpec{
   override func spec(){
     describe("Parsing AAMVA 2010 DL/ID Card Standard aka Version 5"){
       it("should correctly parse all available fields"){
-        let sut = Parser(data: self.licenseData())
+        let sut = AAMVAParser(data: self.licenseData())
         let result = sut.parse()
 
         expect(result.firstName).to(equal("JOHN"))
         expect(result.firstNameAlias).to(beNil())
-        expect(result.firstNameTruncation).to(equal(Truncation.Unknown))
+        expect(result.firstNameTruncation).to(equal(Truncation.none))
         expect(result.lastName).to(equal("PUBLIC"))
         expect(result.lastNameAlias).to(beNil())
-        expect(result.lastNameTruncation).to(equal(Truncation.Unknown))
+        expect(result.lastNameTruncation).to(equal(Truncation.none))
         expect(result.middleName).to(equal("QUINCY"))
-        expect(result.middleNameTruncation).to(equal(Truncation.Unknown))
-        expect(result.expirationDate).to(equal(self.dateFromString("08112019", dateFormat: "MMddyyyy")))
-        expect(result.issueDate).to(equal(self.dateFromString("10092015", dateFormat: "MMddyyyy")))
-        expect(result.gender).to(equal(Gender.Male))
-        expect(result.eyeColor).to(equal(EyeColor.Brown))
+        expect(result.middleNameTruncation).to(equal(Truncation.none))
+        expect(result.expirationDate).to(equal(self.dateFromString(dateString: "08112019", dateFormat: "MMddyyyy")))
+        expect(result.issueDate).to(equal(self.dateFromString(dateString: "10092015", dateFormat: "MMddyyyy")))
+        expect(result.gender).to(equal(.male))
+        expect(result.eyeColor).to(equal(.brown))
         expect(result.height).to(equal(69))
         expect(result.streetAddress).to(equal("454 APRICOT RD"))
         expect(result.city).to(equal("LITTLE ROCK"))
@@ -37,23 +37,23 @@ class VersionFiveParserSpec: QuickSpec{
         expect(result.postalCode).to(equal("11111 2222"))
         expect(result.customerId).to(equal("123456789"))
         expect(result.documentId).to(beNil())
-        expect(result.country).to(equal(IssuingCountry.UnitedStates))
-        expect(result.streetAddressSupplement).to(beNil())
-        expect(result.hairColor).to(equal(HairColor.Unknown))
-        expect(result.dateOfBirth).to(equal(self.dateFromString("08111972", dateFormat: "MMddyyyy")))
+        expect(result.country).to(equal(.unitedStates))
+        expect(result.streetAddressTwo).to(beNil())
+        expect(result.hairColor).to(equal(.unknown))
+        expect(result.birthDate).to(equal(self.dateFromString(dateString: "08111972", dateFormat: "MMddyyyy")))
         expect(result.auditInformation).to(beNil())
         expect(result.inventoryControlNumber).to(beNil())
         expect(result.suffixAlias).to(beNil())
-        expect(result.suffix).to(equal(NameSuffix.Unknown))
-        expect(result.version).to(equal("05"))
+        expect(result.suffix).to(equal(.unknown))
+        expect(result.version).to(equal(05))
       }
     }
   }
 
-  func dateFromString(dateString: String, dateFormat: String) -> NSDate?{
-    let formatter = NSDateFormatter()
+  func dateFromString(dateString: String, dateFormat: String) -> Date?{
+    let formatter = DateFormatter()
     formatter.dateFormat = dateFormat
-    guard let parsedDate = formatter.dateFromString(dateString) else { return nil }
+    guard let parsedDate = formatter.date(from: dateString) else { return nil }
 
     return parsedDate
   }

@@ -125,6 +125,8 @@ public class AAMVAParser {
             return unitedStatesDateFormat
         case .canada:
             return canadaDateFormat
+        case .unknown:
+            return ""
         }
     }
     
@@ -181,8 +183,8 @@ public class AAMVAParser {
             middleNameTruncation:                   parser.parseTruncation(key: FieldKey.middleNameTruncation),
             lastNameTruncation:                     parser.parseTruncation(key: FieldKey.lastNameTruncation),
             expirationDate:                         parser.parseDate(key: FieldKey.expirationDate),
-            issuedDate:                             parser.parseDate(key: FieldKey.issueDate),
-            birthdate:                              parser.parseDate(key: FieldKey.birthDate),
+            issueDate:                             parser.parseDate(key: FieldKey.issueDate),
+            birthDate:                              parser.parseDate(key: FieldKey.birthDate),
             hazmatExpirationDate:                   parser.parseDate(key: FieldKey.hazmatExpirationDate),
             revisionDate:                           parser.parseDate(key: FieldKey.revisionDate),
             race:                                   parser.parseString(key: FieldKey.race),
@@ -199,7 +201,8 @@ public class AAMVAParser {
             postalCode:                             parser.parseString(key: FieldKey.postalCode),
             country:                                parser.parsedCountry,
             licenseNumber:                          parser.parseString(key: FieldKey.driverLicenseNumber),
-            doucmentId:                             parser.parseString(key: FieldKey.uniqueDocumentId),
+            documentId:                             parser.parseString(key: FieldKey.uniqueDocumentId),
+            customerId:                             parser.parseString(key: FieldKey.customerId),
             auditInformation:                       parser.parseString(key: FieldKey.auditInformation),
             inventoryControlNumber:                 parser.parseString(key: FieldKey.inventoryControlNumber),
             complianceType:                         parser.parseString(key: FieldKey.complianceType),
@@ -259,9 +262,9 @@ public class AAMVAParser {
         return formatter.date(from: dateString)
     }
     
-    func parseTruncation(key: FieldKey) -> Truncation? {
+    func parseTruncation(key: FieldKey) -> Truncation {
         guard let truncation = parseString(key: key) else {
-            return nil
+            return .none
         }
         return Truncation.of(truncation)
     }
@@ -298,9 +301,9 @@ public class AAMVAParser {
             ?? parseString(key: FieldKey.driverLicenseName)?.trimmedSplitByComma.last
     }
 
-    var parsedNameSuffix: NameSuffix? {
+    var parsedNameSuffix: NameSuffix {
         guard let suffix = parseString(key: FieldKey.suffix) else {
-            return nil
+            return .unknown
         }
         return NameSuffix.of(suffix)
     }

@@ -23,14 +23,14 @@ public enum Truncation: String {
 
 extension Truncation {
     
-    static func of(_ rawValue: String) -> Truncation? {
+    static func of(_ rawValue: String) -> Truncation {
         switch rawValue {
         case "T":
             return .truncated
         case "N":
             return .none
         default:
-            return nil
+            return .none
         }
     }
 }

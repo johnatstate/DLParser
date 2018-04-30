@@ -1,6 +1,6 @@
 import Quick
 import Nimble
-import LicenseParser
+@testable import LicenseParser
 
 class LicenseParserSpec: QuickSpec {
   override func spec() {
@@ -33,9 +33,9 @@ class LicenseParserSpec: QuickSpec {
             "DBIN\n" +
           "ZAZAA7V81\n"
 
-          let sut = LicenseParser.Parser(data: rawData)
-          let result: LicenseParser.ParsedLicense = sut.parse()
-          expect(result.pdf417).to(equal(rawData))
+          let sut = AAMVAParser(data: rawData)
+          let result = sut.parse()
+          expect(result.pdf417Data).to(equal(rawData))
         }
       }
     }

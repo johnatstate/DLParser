@@ -66,18 +66,17 @@ class VersionOneParser: AAMVAParser {
         
         let inchesStartIndex = feetInches.index(feetInches.startIndex, offsetBy: 1)
         
-        guard
-        let feet = feetInches[feetInches.startIndex].string.double,
-        let inches = feetInches[inchesStartIndex...feetInches.endIndex].string.double else {
+        guard let feet = feetInches[feetInches.startIndex].string.double,
+        let inches = feetInches[inchesStartIndex..<feetInches.endIndex].string.double else {
             return nil
         }
         return inches + feet * 12
     }
 
-    override var parsedNameSuffix: NameSuffix? {
+    override var parsedNameSuffix: NameSuffix {
         guard let suffix = parseString(key: FieldKey.suffix)
             ?? parseDriverLicenseName(key: FieldKey.suffix) else {
-            return nil
+            return .unknown
         }
         return NameSuffix.of(suffix)
     }

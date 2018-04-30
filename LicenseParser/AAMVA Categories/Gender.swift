@@ -16,6 +16,7 @@ import Foundation
 public enum Gender: String {
     case male
     case female
+    case other
 }
 
 
@@ -23,14 +24,14 @@ public enum Gender: String {
 
 extension Gender {
     
-    static func of(_ rawValue: String) -> Gender? {
+    static func of(_ rawValue: String) -> Gender {
         switch rawValue {
         case "1":
             return .male
         case "2":
             return .female
         default:
-            return nil
+            return .other
         }
     }
 }

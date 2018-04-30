@@ -19,7 +19,7 @@ standard.
 let pdf417Data: String = MyFakeLicenseScanner.scan()
 
 // Create a parser with that data
-let parser: Parser = Parser(data: pdf417Data)
+let parser: Parser = AAMVAParser(data: pdf417Data)
 
 // Ask the parser to parse it
 let parsedLicense: ParsedLicense = parser.parse()
@@ -43,13 +43,13 @@ print(parsedLicense.lastName)
 | Middle Name            | Customer Middle Name                                                                                                                                 | String | `middleName`              |
 | Expiration Date        | Document Expiration Date                                                                                                                             | NSDate | `expirationDate`          |
 | Issue Date             | Document Issue Date                                                                                                                                  | NSDate | `issueDate`               |
-| Date of Birth          | Customer Date of Birth                                                                                                                               | NSDate | `dateOfBirth`             |
+| Date of Birth          | Customer Date of Birth                                                                                                                               | NSDate | `birthDate`             |
 | Gender                 | Customer Gender                                                                                                                                      | Enum   | `gender`                  |
 | Eye Color              | Customer Eye Color                                                                                                                                   | Enum   | `eyeColor`                |
 | Hair Color             | Customer Hair Color                                                                                                                                  | Enum   | `hairColor`               |
 | Height                 | Customer Height (in inches)                                                                                                                          | Double | `height`                  |
 | Street Address         | Customer Street Address                                                                                                                              | String | `streetAddress`           |
-| Second Street Address  | Customer Street Address Line 2                                                                                                                       | String | `streetAddressSupplement` |
+| Second Street Address  | Customer Street Address Line 2                                                                                                                       | String | `streetAddressTwo` |
 | City                   | Customer City                                                                                                                                        | String | `city`                    |
 | State                  | Customer State                                                                                                                                       | String | `state`                   |
 | Postal Code            | Customer Postal Code                                                                                                                                 | String | `postalCode`              |

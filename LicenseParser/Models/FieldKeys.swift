@@ -66,6 +66,7 @@ public enum FieldKey: String {
     
     case driverLicenseNumber
     case uniqueDocumentId
+    case customerId
     case auditInformation
     case inventoryControlNumber
     case complianceType

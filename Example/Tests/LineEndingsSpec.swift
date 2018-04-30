@@ -9,7 +9,7 @@
 import Foundation
 import Nimble
 import Quick
-import LicenseParser
+@testable import LicenseParser
 
 class LineEndingsSpec: QuickSpec{
   override func spec(){
@@ -50,22 +50,22 @@ class LineEndingsSpec: QuickSpec{
             "ZAB\r\n" +
           "ZAC"
 
-          let sut = Parser(data: rawData)
+          let sut = AAMVAParser(data: rawData)
           let result = sut.parse()
 
-          expect(result.version).to(equal("08"))
+          expect(result.version).to(equal(08))
           expect(result.lastName).to(equal("PUBLIC"))
           expect(result.middleName).to(equal("QUINCY"))
           expect(result.firstName).to(equal("JOHN"))
-          expect(result.eyeColor).to(equal(EyeColor.Green))
+          expect(result.eyeColor).to(equal(.green))
           expect(result.streetAddress).to(equal("789 E OAK ST"))
-          expect(result.streetAddressSupplement).to(equal("APT #4A"))
+          expect(result.streetAddressTwo).to(equal("APT #4A"))
           expect(result.height).to(equal(69))
           expect(result.city).to(equal("ANYTOWN"))
           expect(result.state).to(equal("CA"))
           expect(result.postalCode).to(equal("902230000"))
-          expect(result.hairColor).to(equal(HairColor.Brown))
-          expect(result.country).to(equal(IssuingCountry.UnitedStates))
+          expect(result.hairColor).to(equal(.brown))
+          expect(result.country).to(equal(.unitedStates))
           expect(result.customerId).to(equal("D12345678"))
         }
       }
